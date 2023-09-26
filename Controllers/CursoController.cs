@@ -10,6 +10,13 @@ namespace apiUniversidade.Controllers
     [ApiController]
     [Route("[controller]")]
     public class CursoController : ControllerBase
+    public readonly ILogger<CursoController> _logger;
+    public readonly ApiUniversidadeContext _context;
+    public CursoController(ILogger<CursoController> logger, apiUniversidadeContext context)
+    {
+        _logger = logger;
+        _context = context;
+    }
     {
         [HttpGet]
         public ActionResult<IEnumerable<Curso>> Get()
