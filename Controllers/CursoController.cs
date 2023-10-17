@@ -29,7 +29,7 @@ namespace apiUniversidade.Controllers
             return cursos;
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult Post(Curso curso){
             _context.Cursos.Add(curso);
             _context.SaveChanges();
