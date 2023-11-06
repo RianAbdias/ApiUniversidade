@@ -22,29 +22,7 @@ namespace apiUniversidade.Controllers
         _logger = logger;
         _context = context;
     } 
-        [HttpGet(Name = "alunos")]
-        public List<Aluno> GetAluno()
-        {
-            List<Aluno> alunos = new List<Aluno>();
-
-            Aluno a1 = new Aluno();
-            a1.Nome = "Amanda";
-            a1.DataNascimento = DateTime.Now;
-            a1.cpf = "123.456.789-52";
-
-            Aluno a2 = new Aluno();
-            a2.Nome = "Camila";
-            a2.DataNascimento = DateTime.Now;
-            a2.cpf = "987.654.321-85";
-
-            alunos.Add(a1);
-            alunos.Add(a2);
-
-            return alunos;
-
-        }
-
-        [HttpGet]
+        [HttpGet("alunos")]
         public ActionResult<IEnumerable<Aluno>> Get()
         {
             var alunos = _context.Alunos.ToList();
