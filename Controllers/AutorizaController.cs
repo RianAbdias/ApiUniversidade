@@ -81,8 +81,7 @@ namespace apiUniversidade.Controllers
             if(!result.Succeeded)
                 return BadRequest(result.Errors);
             await _signInManager.SignInAsync(user, false);
-            //return OK(GerarToken(model));
-            return Ok();
+            return Ok(GeraToken(model));
         }
     [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] UsuarioDTO userInfo)
@@ -90,7 +89,7 @@ namespace apiUniversidade.Controllers
             var result = await _signInManager.PasswordSignInAsync(userInfo.Email, userInfo.Password, isPersistent: false, lockoutOnFailure: false);
 
             if(result.Succeeded)
-                return Ok();
+                return Ok(GeraToken(userInfo));
             else{
                 ModelState.AddModelError(string.Empty, "login inválido.... ඞ");
                 return BadRequest(ModelState);
