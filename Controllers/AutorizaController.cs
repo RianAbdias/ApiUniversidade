@@ -31,45 +31,48 @@ namespace apiUniversidade.Controllers
             _signInManager = signInManager;
             _configuration = configuration;
         }
-        private UsuarioToken GeraToken(UsuarioDTO userInfo){
+        private UsuarioToken GeraToken(UsuarioDTO userInfo)
+        {
 
             var claims = new[]{
-            new Claim(System. IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.UniqueName, userInfo.Email),
-            new Claim("IFRN","TecInfo"),
-            new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
-        };
-
-        //gerar chave através de um algoritmo de chave simétrica
-        var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-
-        //gerar a assinatura digital do token utilizando
-        //a chave privada (key) e o algoritmo HMAC SHA 256
-        var credentials = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
-
-        //tempo de expiracao do token
-        var expiracao =_configuration["TokenConfiguration: ExpireHours"];
-        var expiration = DateTime.UtcNow.AddHours (double.Parse(expiracao));
-
-        JwtSecurityToken token = new JwtSecurityToken(
-            issuer: _configuration["TokenConfiguration:Issuer"],
-            audience: _configuration["TokenConfiguration:Audience"],
-            claims: claims,
-            expires: expiration,
-            signingCredentials: credentials
-        );
-        return new UsuarioToken(){
-            Authenticated = true,
-            Expiration = expiration,
-            Token = new JwtSecurityTokenHandler().WriteToken(token),
-            Message = "JWT Ok."
+                new Claim(System. IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.UniqueName, userInfo.Email),
+                new Claim("IFRN","TecInfo"),
+                new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
             };
+
+            //gerar chave através de um algoritmo de chave simétrica
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+
+            //gerar a assinatura digital do token utilizando
+            //a chave privada (key) e o algoritmo HMAC SHA 256
+            var credentials = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
+
+            //tempo de expiracao do token
+            var expiracao =_configuration["TokenConfiguration:ExpireHours"];
+            var expiration = DateTime.UtcNow.AddHours(double.Parse(expiracao));
+
+            JwtSecurityToken token = new JwtSecurityToken(
+                issuer: _configuration["TokenConfiguration:Issuer"],
+                audience: _configuration["TokenConfiguration:Audience"],
+                claims: claims,
+                expires: expiration,
+                signingCredentials: credentials
+            );
+            return new UsuarioToken(){
+                Authenticated = true,
+                Expiration = expiration,
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Message = "JWT Ok."
+                };
         }
-    [HttpGet]
+        
+        [HttpGet]
         public ActionResult<string> Get(){
             return "ඞ AutorizaController ඞ Acessado em :" + DateTime.Now.ToLongDateString();
         }
-    [HttpPost("register")]
+
+        [HttpPost("register")]
         public async Task<ActionResult> RegisterUser([FromBody]UsuarioDTO model)
         {
             var user = new IdentityUser{
@@ -83,7 +86,8 @@ namespace apiUniversidade.Controllers
             await _signInManager.SignInAsync(user, false);
             return Ok(GeraToken(model));
         }
-    [HttpPost("login")]
+
+        [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] UsuarioDTO userInfo)
         {
             var result = await _signInManager.PasswordSignInAsync(userInfo.Email, userInfo.Password, isPersistent: false, lockoutOnFailure: false);
