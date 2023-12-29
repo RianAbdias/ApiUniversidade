@@ -13,13 +13,13 @@ namespace apiUniversidade.Controllers
 {
     [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
-    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [Route("api/{v:apiversion}/curso")]
-    public class CursoController : ControllerBase
+    public class CursoControllerv2 : ControllerBase
     {
-    public readonly ILogger<CursoController> _logger;
+    public readonly ILogger<CursoControllerv2> _logger;
     public readonly ApiUniversidadeContext _context;
-    public CursoController(ILogger<CursoController> logger, ApiUniversidadeContext context)
+    public CursoControllerv2(ILogger<CursoControllerv2> logger, ApiUniversidadeContext context)
     {
         _logger = logger;
         _context = context;
