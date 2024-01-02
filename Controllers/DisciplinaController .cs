@@ -13,7 +13,7 @@ namespace apiUniversidade.Controllers
 {
     [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/{v:apiversion}/disciplina")]
     public class DisciplinaController  : ControllerBase
     {
 
