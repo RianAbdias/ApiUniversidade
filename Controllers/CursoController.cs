@@ -25,7 +25,7 @@ namespace apiUniversidade.Controllers
         _context = context;
     }
     
-        [HttpGet("geral")]
+        [HttpGet]
         public ActionResult<IEnumerable<Curso>> Get()
         {
             var cursos = _context.Cursos?.ToList();

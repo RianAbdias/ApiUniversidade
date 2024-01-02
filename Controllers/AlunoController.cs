@@ -13,6 +13,7 @@ namespace apiUniversidade.Controllers
 {
     [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
+    [ApiVersion("1.0")]
     [Route("api/{v:apiversion}/aluno")]
     public class AlunoController : ControllerBase
     {
@@ -23,7 +24,7 @@ namespace apiUniversidade.Controllers
         _logger = logger;
         _context = context;
     } 
-        [HttpGet("alunos")]
+        [HttpGet]
         public ActionResult<IEnumerable<Aluno>> Get()
         {
             var alunos = _context.Alunos?.ToList();

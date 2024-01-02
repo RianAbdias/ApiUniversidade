@@ -13,6 +13,7 @@ namespace apiUniversidade.Controllers
 {
     [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
+    [ApiVersion("1.0")]
     [Route("api/{v:apiversion}/disciplina")]
     public class DisciplinaController  : ControllerBase
     {
@@ -24,7 +25,7 @@ namespace apiUniversidade.Controllers
         _logger = logger;
         _context = context;
     }  
-        [HttpGet("disciplinas")]
+        [HttpGet]
         public ActionResult<IEnumerable<Disciplina>> Get()
         {
             var disciplinas = _context.Disciplinas?.ToList();
